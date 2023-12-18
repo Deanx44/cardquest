@@ -1,12 +1,24 @@
 from django.contrib import admin
-from .models import Collection, PokemonCard, Trainer
+from .models import PokemonCard, Trainer, Collection
+# Register your models here.
 
-@admin.register(PokemonCard)
-class PokemonCardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'rarity', 'hp', 'card_type', 'attack', 'description', 'weakness', 'card_number', 'release_date', 'evolution_stage', 'abilities',)
+class BaseModelAdmin(admin.ModelAdmin):
+    list_display = ('created_at', 'updated_at')
 
-@admin.register(Trainer)
-class TrainerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'birthdate', 'location', 'email')
+class TrainerAdmin(BaseModelAdmin):
+    list_display = ('name', 'birthdate', 'location', 'email', 'created_at', 'updated_at')
     
-admin.site.register(Collection)
+class PokemonCardAdmin(BaseModelAdmin):
+    list_display = (
+        'name', 'rarity', 'hp', 'card_type', 'attack', 'description', 'weakness',
+        'card_number', 'release_date', 'evolution_stage', 'abilities', 'created_at', 'updated_at'
+    )
+
+class CollectionAdmin(BaseModelAdmin):
+    list_display = ('card', 'trainer', 'collection_date', 'created_at', 'updated_at')
+
+
+
+admin.site.register(PokemonCard, PokemonCardAdmin)
+admin.site.register(Trainer, TrainerAdmin)
+admin.site.register(Collection, CollectionAdmin)

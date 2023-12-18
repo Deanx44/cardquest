@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from cardquest.views import Home, TrainerList, Collection, PokemonCard
+from cardquest import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.Home.as_view(), name='home'),
+    path('trainer_list', TrainerList.as_view(), name='trainer-list'),
+    path('collection', Collection.as_view(), name='collection'),
+    path('pokemon_card', PokemonCard.as_view(), name='pokemon-card'),
 ]
